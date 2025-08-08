@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CafeChain - Coming Soon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern Static Coffee Theme */
+        :root {
+            --cream: #F9F5F0;
+            --dark-brown: #3A2D28;
+            --medium-brown: #6F4E37;
+            --light-brown: #C7A17A;
+            --accent: #E3A23B;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--cream);
+            color: var(--dark-brown);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Main container with subtle texture */
+        .container {
+            max-width: 650px;
+            width: 100%;
+            position: relative;
+            background-color: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(58, 45, 40, 0.08);
+            border: 1px solid rgba(58, 45, 40, 0.05);
+        }
+
+        /* Logo styling */
+        .logo-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            padding: 10px;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(58, 45, 40, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 8px solid var(--light-brown);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 50%;
+        }
+
+        /* Typography with animations */
+        h1 {
+            font-size: clamp(2.2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-brown);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .cs {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #ee9c17;
+            animation: 
+                fadeIn 1s ease-out,
+                glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(238, 156, 23, 0.5); }
+            to { text-shadow: 0 0 15px rgba(238, 156, 23, 0.8); }
+        }
+
+        .tagline {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .tagline::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+            animation: expand 1s ease-out forwards;
+        }
+
+        @keyframes expand {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+
+        .description {
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto 2.5rem;
+            color: var(--medium-brown);
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Countdown with animations */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(58, 45, 40, 0.1);
+            border: 1px solid rgba(58, 45, 40, 0.05);
+            animation: fadeInUp 1s ease-out;
+            animation-delay: calc(var(--delay) * 0.2s);
+        }
+
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--medium-brown);
+            margin-bottom: 0.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .countdown-item:hover .countdown-number {
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--dark-brown);
+            opacity: 0.7;
+        }
+
+        /* Instagram CTA with animation */
+        .instagram-cta {
+            margin-top: 2rem;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        .instagram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 5px 20px rgba(188, 24, 136, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .instagram-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 7px 25px rgba(188, 24, 136, 0.3);
+        }
+
+        /* Coffee bean decorative elements */
+        .coffee-bean {
+            position: absolute;
+            width: 40px;
+            height: 25px;
+            background-color: var(--medium-brown);
+            opacity: 0.1;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .logo-container {
+                width: 120px;
+                height: 120px;
+                border-width: 6px;
+            }
+            
+            .countdown-item {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1.5rem;
+            }
+            
+            .logo-container {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .countdown {
+                gap: 0.8rem;
+            }
+            
+            .countdown-item {
+                width: 65px;
+                height: 65px;
+            }
+            
+            .instagram-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative static coffee beans -->
+    <div class="coffee-bean" style="top: 10%; left: 10%;"></div>
+    <div class="coffee-bean" style="top: 15%; right: 15%; transform: rotate(45deg);"></div>
+    <div class="coffee-bean" style="bottom: 20%; left: 20%; transform: rotate(90deg);"></div>
+    <div class="coffee-bean" style="bottom: 15%; right: 10%; transform: rotate(135deg);"></div>
+
+    <div class="container">
+        <!-- Animated "Coming Soon" text -->
+        <h1 class="cs">Coming soon...</h1>
+        
+        <!-- Your Logo - replace with your image -->
+        <div class="logo-container">
+            <img src="logo.png" alt="CafeChain Logo">
+        </div>
+        
+        <h1>CafeChain</h1>
+        <p class="tagline">Earn Rewards on Every Cup</p>
+        <p class="description">
+            We're crafting a revolutionary coffee experience where every sip brings you closer to exclusive rewards. Follow our journey on Instagram to be the first to know when we launch.
+        </p>
+        <div class="instagram-cta">
+            <a href="https://instagram.com/cafechain.in" class="instagram-btn" target="_blank">
+                <i class="fab fa-instagram"></i>
+                Follow for Updates
+            </a>
+        </div>
+        <!-- Countdown with staggered animations -->
+        <div class="countdown">
+            <div class="countdown-item" style="--delay: 1">
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-item" style="--delay: 2">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-item" style="--delay: 3">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-item" style="--delay: 4">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">Seconds</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple Countdown Timer
+        const launchDate = new Date("Sep 19, 2025 00:00:00").getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            if (distance < 0) {
+                document.querySelector('.countdown').innerHTML = `
+                    <div style="width: 100%; animation: fadeIn 1s ease-out;">
+                        <h2 style="font-size: 1.5rem; color: var(--accent); margin-bottom: 1rem;">
+                            We're Open!
+                        </h2>
+                        <p style="font-size: 1rem; margin-bottom: 1.5rem;">
+                            Visit us now to start earning rewards!
+                        </p>
+                        <a href="https://instagram.com/cafechain.in" class="instagram-btn" target="_blank" style="display: inline-flex;">
+                            <i class="fab fa-instagram"></i>
+                            Visit Our Instagram
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").textContent = days.toString().padStart(2, '0');
+            document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Initialize and update every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

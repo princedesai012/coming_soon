@@ -14,6 +14,8 @@
             --light-brown: #C7A17A;
             --accent: #E3A23B;
             --white: #FFFFFF;
+            --curtain-red: #8B0000;
+            --curtain-gold: #D4AF37;
         }
 
         * {
@@ -34,6 +36,103 @@
             text-align: center;
             padding: 2rem;
             line-height: 1.6;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Curtain styling */
+        .curtain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            pointer-events: none;
+        }
+
+        .curtain-panel {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--curtain-red), #600000);
+            position: relative;
+            transition: transform 1.5s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .left-curtain {
+            transform-origin: left center;
+        }
+
+        .right-curtain {
+            transform-origin: right center;
+        }
+
+        .curtain-open .left-curtain {
+            transform: perspective(1000px) rotateY(-100deg);
+        }
+
+        .curtain-open .right-curtain {
+            transform: perspective(1000px) rotateY(100deg);
+        }
+
+        .curtain-fringe {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(45deg, var(--curtain-gold) 25%, transparent 25%, transparent 50%, 
+                          var(--curtain-gold) 50%, var(--curtain-gold) 75%, transparent 75%);
+            background-size: 30px 30px;
+        }
+
+        .curtain-tassel {
+            position: absolute;
+            bottom: 30px;
+            width: 20px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--curtain-gold), #B8860B);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .left-curtain .curtain-tassel {
+            right: 10px;
+        }
+
+        .right-curtain .curtain-tassel {
+            left: 10px;
+        }
+
+        .curtain-pull {
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, var(--curtain-gold), #B8860B);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 1.5rem;
+            cursor: pointer;
+            pointer-events: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            animation: pulse 2s infinite;
+        }
+
+        .left-curtain .curtain-pull {
+            right: 20px;
+        }
+
+        .right-curtain .curtain-pull {
+            left: 20px;
         }
 
         /* Main container with subtle texture */
@@ -46,6 +145,14 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(58, 45, 40, 0.08);
             border: 1px solid rgba(58, 45, 40, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .content-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Logo styling */
@@ -253,6 +360,12 @@
             .countdown-number {
                 font-size: 1.5rem;
             }
+
+            .curtain-pull {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -278,10 +391,34 @@
                 padding: 0.8rem 1.5rem;
                 font-size: 0.9rem;
             }
+
+            .curtain-pull {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Curtain overlay -->
+    <div class="curtain-container">
+        <div class="curtain-panel left-curtain">
+            <div class="curtain-fringe"></div>
+            <div class="curtain-tassel"></div>
+            <div class="curtain-pull">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+        <div class="curtain-panel right-curtain">
+            <div class="curtain-fringe"></div>
+            <div class="curtain-tassel"></div>
+            <div class="curtain-pull">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+    </div>
+
     <!-- Decorative static coffee beans -->
     <div class="coffee-bean" style="top: 10%; left: 10%;"></div>
     <div class="coffee-bean" style="top: 15%; right: 15%; transform: rotate(45deg);"></div>
@@ -330,6 +467,32 @@
     </div>
 
     <script>
+        // Function to open the curtains
+        function openCurtains() {
+            document.querySelector('.curtain-container').classList.add('curtain-open');
+            document.querySelector('.container').classList.add('content-visible');
+            
+            // Store in sessionStorage that curtains have been opened
+            sessionStorage.setItem('curtainsOpened', 'true');
+        }
+
+        // Check if curtains have already been opened in this session
+        if (sessionStorage.getItem('curtainsOpened') === 'true') {
+            openCurtains();
+        } else {
+            // Auto-open after 2 seconds if user doesn't interact
+            setTimeout(() => {
+                if (sessionStorage.getItem('curtainsOpened') !== 'true') {
+                    openCurtains();
+                }
+            }, 2000);
+        }
+
+        // Add click event to curtain pulls
+        document.querySelectorAll('.curtain-pull').forEach(pull => {
+            pull.addEventListener('click', openCurtains);
+        });
+
         // Simple Countdown Timer
         const launchDate = new Date("Sep 20, 2025 08:09:25").getTime();
         

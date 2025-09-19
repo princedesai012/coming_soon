@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CafeChain - Coming Soon</title>
+    <title>CafeChain - Premium Coffee Experience</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* Modern Static Coffee Theme */
         :root {
@@ -16,6 +17,7 @@
             --white: #FFFFFF;
             --curtain-red: #8B0000;
             --curtain-gold: #D4AF37;
+            --section-spacing: 80px;
         }
 
         * {
@@ -24,20 +26,17 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--cream);
             color: var(--dark-brown);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
             line-height: 1.6;
-            overflow: hidden;
-            position: relative;
+            overflow-x: hidden;
         }
 
         /* Curtain styling */
@@ -58,11 +57,25 @@
             background: linear-gradient(to bottom, var(--curtain-red), #600000);
             position: relative;
             transition: transform 1.5s ease-in-out;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+        }
+
+        .curtain-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, 
+                          transparent 50%, rgba(0, 0, 0, 0.2) 50%, 
+                          rgba(0, 0, 0, 0.2) 75%, transparent 75%);
+            background-size: 50px 50px;
+            opacity: 0.3;
         }
 
         .left-curtain {
@@ -74,18 +87,18 @@
         }
 
         .curtain-open .left-curtain {
-            transform: perspective(1000px) rotateY(-100deg);
+            transform: perspective(1200px) rotateY(-110deg);
         }
 
         .curtain-open .right-curtain {
-            transform: perspective(1000px) rotateY(100deg);
+            transform: perspective(1200px) rotateY(110deg);
         }
 
         .curtain-fringe {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 30px;
+            height: 40px;
             background: linear-gradient(45deg, var(--curtain-gold) 25%, transparent 25%, transparent 50%, 
                           var(--curtain-gold) 50%, var(--curtain-gold) 75%, transparent 75%);
             background-size: 30px 30px;
@@ -93,58 +106,58 @@
 
         .curtain-tassel {
             position: absolute;
-            bottom: 30px;
-            width: 20px;
-            height: 60px;
+            bottom: 40px;
+            width: 24px;
+            height: 80px;
             background: linear-gradient(to bottom, var(--curtain-gold), #B8860B);
-            border-radius: 10px 10px 0 0;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .left-curtain .curtain-tassel {
-            right: 10px;
+            right: 15px;
         }
 
         .right-curtain .curtain-tassel {
-            left: 10px;
+            left: 15px;
         }
 
         .curtain-pull {
             position: absolute;
             top: 50%;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: radial-gradient(circle, var(--curtain-gold), #B8860B);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #333;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             pointer-events: auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
             z-index: 1001;
             animation: pulse 2s infinite;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .curtain-pull:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
         }
 
         .left-curtain .curtain-pull {
-            right: 20px;
+            right: 30px;
         }
 
         .right-curtain .curtain-pull {
-            left: 20px;
+            left: 30px;
         }
 
-        /* Main container with subtle texture */
-        .container {
-            max-width: 650px;
-            width: 100%;
-            position: relative;
-            background-color: var(--white);
-            padding: 3rem 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(58, 45, 40, 0.08);
-            border: 1px solid rgba(58, 45, 40, 0.05);
+        /* Main content */
+        .main-content {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1s ease, transform 1s ease;
@@ -155,19 +168,44 @@
             transform: translateY(0);
         }
 
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Main container with subtle texture */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            background-color: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.1);
+            border: 1px solid rgba(58, 45, 40, 0.08);
+            margin-bottom: var(--section-spacing);
+        }
+
         /* Logo styling */
         .logo-container {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             margin: 0 auto 1.5rem;
             border-radius: 50%;
-            padding: 10px;
+            padding: 12px;
             background-color: var(--white);
-            box-shadow: 0 5px 15px rgba(58, 45, 40, 0.1);
+            box-shadow: 0 8px 25px rgba(58, 45, 40, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 8px solid var(--light-brown);
+            border: 10px solid var(--light-brown);
             animation: pulse 2s infinite ease-in-out;
         }
 
@@ -185,7 +223,8 @@
 
         /* Typography with animations */
         h1 {
-            font-size: clamp(2.2rem, 5vw, 3rem);
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: var(--dark-brown);
@@ -193,7 +232,8 @@
         }
 
         .cs {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 3rem);
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: #ee9c17;
@@ -220,11 +260,11 @@
 
         @keyframes glow {
             from { text-shadow: 0 0 5px rgba(238, 156, 23, 0.5); }
-            to { text-shadow: 0 0 15px rgba(238, 156, 23, 0.8); }
+            to { text-shadow: 0 0 20px rgba(238, 156, 23, 0.8); }
         }
 
         .tagline {
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
             color: var(--accent);
             margin-bottom: 1.5rem;
             font-weight: 500;
@@ -236,11 +276,11 @@
         .tagline::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
+            width: 80px;
+            height: 4px;
             background: var(--accent);
             border-radius: 3px;
             animation: expand 1s ease-out forwards;
@@ -248,11 +288,11 @@
 
         @keyframes expand {
             from { width: 0; }
-            to { width: 60px; }
+            to { width: 80px; }
         }
 
         .description {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             max-width: 500px;
             margin: 0 auto 2.5rem;
             color: var(--medium-brown);
@@ -263,28 +303,34 @@
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 1.2rem;
             margin: 2.5rem 0;
             flex-wrap: wrap;
         }
 
         .countdown-item {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             background-color: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(58, 45, 40, 0.1);
-            border: 1px solid rgba(58, 45, 40, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(58, 45, 40, 0.12);
+            border: 1px solid rgba(58, 45, 40, 0.08);
             animation: fadeInUp 1s ease-out;
             animation-delay: calc(var(--delay) * 0.2s);
+            transition: all 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(58, 45, 40, 0.15);
         }
 
         .countdown-number {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--medium-brown);
             margin-bottom: 0.2rem;
@@ -297,11 +343,11 @@
         }
 
         .countdown-label {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             color: var(--dark-brown);
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
         /* Instagram CTA with animation */
@@ -316,66 +362,243 @@
             gap: 0.8rem;
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
             color: white;
-            padding: 0.9rem 2rem;
+            padding: 1rem 2.2rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 500;
-            box-shadow: 0 5px 20px rgba(188, 24, 136, 0.2);
+            box-shadow: 0 8px 25px rgba(188, 24, 136, 0.25);
             transition: all 0.3s ease;
         }
 
         .instagram-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 7px 25px rgba(188, 24, 136, 0.3);
+            box-shadow: 0 10px 30px rgba(188, 24, 136, 0.35);
         }
 
         /* Coffee bean decorative elements */
         .coffee-bean {
             position: absolute;
-            width: 40px;
-            height: 25px;
+            width: 50px;
+            height: 30px;
             background-color: var(--medium-brown);
             opacity: 0.1;
             border-radius: 50%;
             z-index: -1;
         }
 
+        /* Scroll down indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--medium-brown);
+            opacity: 0.8;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator i {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* Content sections */
+        .content-sections {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin-bottom: var(--section-spacing);
+            padding: 40px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(58, 45, 40, 0.08);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--dark-brown);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            color: var(--medium-brown);
+            line-height: 1.8;
+        }
+
+        /* Features grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            background: rgba(199, 161, 122, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(199, 161, 122, 0.2);
+            box-shadow: 0 10px 25px rgba(58, 45, 40, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            color: var(--medium-brown);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-brown);
+            color: var(--cream);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .footer-link {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            :root {
+                --section-spacing: 60px;
+            }
+            
             .container {
                 padding: 2rem 1.5rem;
             }
             
             .logo-container {
-                width: 120px;
-                height: 120px;
-                border-width: 6px;
+                width: 140px;
+                height: 140px;
+                border-width: 8px;
             }
             
             .countdown-item {
-                width: 70px;
-                height: 70px;
+                width: 80px;
+                height: 80px;
             }
             
             .countdown-number {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
 
             .curtain-pull {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 480px) {
-            body {
+            .hero {
                 padding: 1.5rem;
             }
             
             .logo-container {
-                width: 100px;
-                height: 100px;
+                width: 120px;
+                height: 120px;
             }
             
             .countdown {
@@ -383,19 +606,27 @@
             }
             
             .countdown-item {
-                width: 65px;
-                height: 65px;
+                width: 70px;
+                height: 70px;
             }
             
             .instagram-btn {
-                padding: 0.8rem 1.5rem;
+                padding: 0.9rem 1.8rem;
                 font-size: 0.9rem;
             }
 
             .curtain-pull {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .section {
+                padding: 25px 15px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -419,58 +650,64 @@
         </div>
     </div>
 
-    <!-- Decorative static coffee beans -->
-    <div class="coffee-bean" style="top: 10%; left: 10%;"></div>
-    <div class="coffee-bean" style="top: 15%; right: 15%; transform: rotate(45deg);"></div>
-    <div class="coffee-bean" style="bottom: 20%; left: 20%; transform: rotate(90deg);"></div>
-    <div class="coffee-bean" style="bottom: 15%; right: 10%; transform: rotate(135deg);"></div>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Hero section -->
+        <section class="hero">
+            <!-- Decorative static coffee beans -->
+            <div class="coffee-bean" style="top: 10%; left: 10%;"></div>
+            <div class="coffee-bean" style="top: 15%; right: 15%; transform: rotate(45deg);"></div>
+            <div class="coffee-bean" style="bottom: 20%; left: 20%; transform: rotate(90deg);"></div>
+            <div class="coffee-bean" style="bottom: 15%; right: 10%; transform: rotate(135deg);"></div>
 
-    <div class="container">
-        <!-- Animated "Coming Soon" text -->
-        <h1 class="cs">Coming soon...</h1>
-        
-        <!-- Your Logo - replace with your image -->
-        <div class="logo-container">
-            <img src="logo.png" alt="CafeChain Logo">
-        </div>
-        
-        <h1>CafeChain</h1>
-        <p class="tagline">Earn Rewards on Every Cup</p>
-        <p class="description">
-            We're crafting a revolutionary coffee experience where every sip brings you closer to exclusive rewards. Follow our journey on Instagram to be the first to know when we launch.
-        </p>
-        <div class="instagram-cta">
-            <a href="https://instagram.com/cafechain.in" class="instagram-btn" target="_blank">
-                <i class="fab fa-instagram"></i>
-                Follow for Updates
-            </a>
-        </div>
-        <!-- Countdown with staggered animations -->
-        <div class="countdown">
-            <div class="countdown-item" style="--delay: 1">
-                <span class="countdown-number" id="days">00</span>
-                <span class="countdown-label">Days</span>
+            <div class="container">
+                <!-- Animated "Coming Soon" text -->
+                <h1 class="cs">Coming soon...</h1>
+                
+                <!-- Your Logo - replace with your image -->
+                <div class="logo-container">
+                    <img src="logo.png" alt="CafeChain Logo">
+                </div>
+                
+                <h1>CafeChain</h1>
+                <p class="tagline">Earn Rewards on Every Cup</p>
+                <p class="description">
+                    We're crafting a revolutionary coffee experience where every sip brings you closer to exclusive rewards. Follow our journey on Instagram to be the first to know when we launch.
+                </p>
+                <div class="instagram-cta">
+                    <a href="https://instagram.com/cafechain.in" class="instagram-btn" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                        Follow for Updates
+                    </a>
+                </div>
+                <!-- Countdown with staggered animations -->
+                <div class="countdown">
+                    <div class="countdown-item" style="--delay: 1">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-item" style="--delay: 2">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-item" style="--delay: 3">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item" style="--delay: 4">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Seconds</span>
+                    </div>
+                </div>
             </div>
-            <div class="countdown-item" style="--delay: 2">
-                <span class="countdown-number" id="hours">00</span>
-                <span class="countdown-label">Hours</span>
-            </div>
-            <div class="countdown-item" style="--delay: 3">
-                <span class="countdown-number" id="minutes">00</span>
-                <span class="countdown-label">Minutes</span>
-            </div>
-            <div class="countdown-item" style="--delay: 4">
-                <span class="countdown-number" id="seconds">00</span>
-                <span class="countdown-label">Seconds</span>
-            </div>
-        </div>
+        </section>
     </div>
 
     <script>
         // Function to open the curtains
         function openCurtains() {
             document.querySelector('.curtain-container').classList.add('curtain-open');
-            document.querySelector('.container').classList.add('content-visible');
+            document.querySelector('.main-content').classList.add('content-visible');
             
             // Store in sessionStorage that curtains have been opened
             sessionStorage.setItem('curtainsOpened', 'true');
@@ -480,12 +717,12 @@
         if (sessionStorage.getItem('curtainsOpened') === 'true') {
             openCurtains();
         } else {
-            // Auto-open after 2 seconds if user doesn't interact
+            // Auto-open after 3 seconds if user doesn't interact
             setTimeout(() => {
                 if (sessionStorage.getItem('curtainsOpened') !== 'true') {
                     openCurtains();
                 }
-            }, 2000);
+            }, 3000);
         }
 
         // Add click event to curtain pulls
@@ -532,6 +769,24 @@
         // Initialize and update every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Section animation on scroll
+        function checkScroll() {
+            const sections = document.querySelectorAll('.section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach(section => {
+                const position = section.getBoundingClientRect().top;
+                
+                if (position < windowHeight * 0.85) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkScroll);
+        // Check on initial load
+        window.addEventListener('load', checkScroll);
     </script>
 </body>
 </html>
